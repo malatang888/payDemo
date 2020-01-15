@@ -7,6 +7,7 @@ package com.example.demo.pay.config;
  * @description: TODO
  * @date 2020/1/613:52
  */
+
 public class AlipayConfig {
 
     // 1.商户appid
