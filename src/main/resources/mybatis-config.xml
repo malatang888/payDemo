@@ -1,0 +1,25 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration >
+	<!-- <properties resource=""></properties> -->
+	<settings>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="cacheEnabled" value="true"/>
+		<!--<setting name="logImpl" value="STDOUT_LOGGING " />-->
+		<setting name="logImpl" value="NO_LOGGING"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="logPrefix" value="dao."/>
+	</settings>
+
+    <typeAliases>
+    	<package name="com.example"/>
+    </typeAliases>
+    
+    <plugins>
+	    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+		</plugin>
+	    <!-- 分页插件或其他插件，OrderBy 一定要在分页插件下面（主要是为了避免 count 也被增加排序） -->
+	    <plugin interceptor="tk.mybatis.orderbyhelper.OrderByHelper"/>
+	</plugins>
+</configuration>

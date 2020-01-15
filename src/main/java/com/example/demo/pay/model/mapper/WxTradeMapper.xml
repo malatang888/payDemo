@@ -1,0 +1,160 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.pay.dao.WxTradeDao">
+	<resultMap id="resultMap" type="com.example.demo.pay.model.WxTrade">
+		<result column="trade_no" property="tradeNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="member_id" property="memberId"/>
+		<result column="status" property="status"/>
+		<result column="total_fee" property="totalFee"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="type" property="type"/>
+	</resultMap>
+
+	<sql id="table">
+		`tb_wxpay_trade`
+	</sql>
+
+	<sql id="tableNm">
+		'tb_wxpay_trade'
+	</sql>
+
+	<sql id="columns">
+		`trade_no`,`user_id`,`member_id`,`status`,`total_fee`,`create_date`,`update_date`,`type`
+	</sql>
+
+	<sql id="columnWithNm">
+		`trade_no` as "中文列名0",`user_id` as "中文列名1",`member_id` as "中文列名2",`status` as "中文列名3",`total_fee` as "中文列名4",`create_date` as "中文列名5",`update_date` as "中文列名6",`type` as "中文列名7"
+	</sql>
+
+	<sql id="properties">
+		#{tradeNo},#{userId},#{memberId},#{status},#{totalFee},#{createDate},#{updateDate},#{type}
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="resultMap">
+		select * from <include refid="table"/> where id = #{id}
+	</select>
+
+	<select id="selectColumn" resultType="java.util.LinkedHashMap">
+		select column_name as 'key',column_comment as 'title' from INFORMATION_SCHEMA.Columns
+		where table_name=<include refid="tableNm"/>
+	</select>
+
+	<select id="selectByExample" resultMap="resultMap">
+		select * from <include refid="table"/>
+		<where>
+			<if test="tradeNo != null">
+				and trade_no = #{tradeNo}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="memberId != null">
+				and member_id = #{memberId}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="totalFee != null">
+				and total_fee = #{totalFee}
+			</if>
+			<if test="createDate != null">
+				and create_date = #{createDate}
+			</if>
+			<if test="updateDate != null">
+				and update_date = #{updateDate}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectWithColumn" resultType="java.util.LinkedHashMap">
+		select <include refid="columnWithNm"/> from <include refid="table"/>
+		<where>
+			<if test="tradeNo != null">
+				and trade_no = #{tradeNo}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="memberId != null">
+				and member_id = #{memberId}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="totalFee != null">
+				and total_fee = #{totalFee}
+			</if>
+			<if test="createDate != null">
+				and create_date = #{createDate}
+			</if>
+			<if test="updateDate != null">
+				and update_date = #{updateDate}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByFilter" resultMap="resultMap">
+		select * from <include refid="table"/>
+		<where>
+			<if test="secCd != null">
+				and sec_cd = #{secCd}
+			</if>
+			<if test="year != null">
+				and date_format(report_dt,"%Y") = #{year}
+			</if>
+			<if test="startDt != null">
+				and report_dt &gt;= #{startDt}
+			</if>
+			<if test="endDt != null">
+				and report_dt &lt;= #{endDt}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMapByFilter" resultType="java.util.LinkedHashMap">
+		select * from <include refid="table"/>
+		<where>
+			<if test="secCd != null">
+				and sec_cd = #{secCd}
+			</if>
+			<if test="startYear != null">
+				and date_format(report_dt,"%Y") &gt;= #{startYear}
+			</if>
+			<if test="endYear != null">
+				and date_format(report_dt,"%Y") &lt;= #{endYear}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insert">
+		insert into <include refid="table"/> (<include refid="columns"></include>)
+		values (<include refid="properties"></include>)
+	</insert>
+
+
+	<select id="selectByTradeNo" resultMap="resultMap">
+		SELECT
+		t.*
+		FROM
+		tb_wxpay_trade t
+		WHERE
+		t.trade_no = #{tradeNo}
+	</select>
+
+	<update id="updateWxTradeStatus">
+		UPDATE tb_wxpay_trade t
+		SET t.`status` = '1'
+		WHERE
+		t.trade_no = #{tradeNo}
+	</update>
+</mapper>
